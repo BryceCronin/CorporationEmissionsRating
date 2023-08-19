@@ -45,14 +45,13 @@ prov_profile_path=
 [html5_settings]
 commands_used=0
 dynamic_memory=0
-output_path=
+output_path=C:/Users/Bryce/OneDrive/Hackathons/__GovHack 2023/Emissions Rating/Generator/CorporationEmissionsRating/HTML5
 
 [projectfiles]
 FILE_0=main.agc;-1
 
 [files]
-FILE_NAME_0=1;main.agc;65;0
-
+FILE_NAME_0=1;main.agc;189;0
 
 [watchvariables]
 

@@ -1,7 +1,7 @@
 // Project: EmissionRatingGenerator 
 // Created: 23-08-19
 
-SetErrorMode() // Hide all errors
+SetErrorMode(0) // Hide all errors
 
 // Set window properties
 SetWindowTitle( "Corporation Energy Rating - Generator" )
@@ -13,8 +13,12 @@ SetVirtualResolution( 1080, 1080 )
 SetSyncRate( 30, 0 ) 
 SetScissor( 0,0,0,0 )
 UseNewDefaultFonts( 1 )
-SetClearColor(255,255,255)
 SetPrintColor(255,0,0)
+if GetDeviceBaseName() <> "html5"
+	SetClearColor(255,255,255)
+else
+	SetClearColor(229,229,229)
+endif
 
 // Open data
 OpenToRead (1, "data.csv" )
@@ -61,12 +65,12 @@ LoadFont(1,"ProductSans.ttf")
 SetTextFont(nameText,1)
 
 // Variables
-global OrgNumber = 4161 // Current org/corp being shown
+global OrgNumber = 1 // Current org/corp being shown
 global PrevOrgNumber = 0
 OutputAll = 0 
 
 // Set output
-setFolder("Output")
+setFolder("")
 
 // Basic functions
 function nextOrg()
@@ -171,6 +175,7 @@ do
     	endif
     	
     	// Enter key - Output all badges to default write location (AppData on Windows)
+    	
     	if GetDeviceBaseName() <> "html5" // Disable when running in browser
 	    	if GetRawKeyPressed(13)
 	    		OrgNumber = 1
@@ -182,11 +187,14 @@ do
 		    saveImage(OrgNumber,(GetStringToken( data$, ",", OrgNumber )+".png"))
 		    OrgNumber = OrgNumber + 10
 		    
-		    if OrgNumber > 4170
+		    if OrgNumber > 4170 // Open output location and close app when complete
+		    		a$ = GetWritePath()
+				a$ = ReplaceString(a$,"/","\",-1)
+				RunApp("explorer.exe",a$)
 		    		exit
 		    endif
    		endif
    	endif
-    
+   	   
     Sync()
 loop
