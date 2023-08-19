@@ -1,7 +1,7 @@
 // Project: EmissionRatingGenerator 
 // Created: 23-08-19
 
-SetErrorMode(2) // show all errors
+SetErrorMode() // Hide all errors
 
 // Set window properties
 SetWindowTitle( "Corporation Energy Rating - Generator" )
@@ -171,20 +171,22 @@ do
     	endif
     	
     	// Enter key - Output all badges to default write location (AppData on Windows)
-    	if GetRawKeyPressed(13)
-    		OrgNumber = 1
-    		OutputAll = 1
-    	endif
-    	if OutputAll = 1
-	    Render()
-	    getImage(OrgNumber,0,0,1080,1080)
-	    saveImage(OrgNumber,(GetStringToken( data$, ",", OrgNumber )+".png"))
-	    OrgNumber = OrgNumber + 10
-	    
-	    if OrgNumber > 4170
-	    		exit
-	    endif
-    endif
+    	if GetDeviceBaseName() <> "html5" // Disable when running in browser
+	    	if GetRawKeyPressed(13)
+	    		OrgNumber = 1
+	    		OutputAll = 1
+	    	endif
+	    	if OutputAll = 1
+		    Render()
+		    getImage(OrgNumber,0,0,1080,1080)
+		    saveImage(OrgNumber,(GetStringToken( data$, ",", OrgNumber )+".png"))
+		    OrgNumber = OrgNumber + 10
+		    
+		    if OrgNumber > 4170
+		    		exit
+		    endif
+   		endif
+   	endif
     
     Sync()
 loop
